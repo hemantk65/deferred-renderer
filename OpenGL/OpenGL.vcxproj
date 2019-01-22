@@ -94,6 +94,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -120,6 +121,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -128,89 +130,54 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="blur.frag" />
-    <None Include="blur.vert" />
-    <None Include="dof.frag" />
-    <None Include="map.frag" />
-    <None Include="map.vert" />
     <None Include="packages.config" />
-    <None Include="shadow.frag" />
-    <None Include="shadow.vert" />
-    <None Include="show.frag" />
-    <None Include="show.vert" />
+    <None Include="resources\blur.frag" />
+    <None Include="resources\blur.vert" />
+    <None Include="resources\dof.frag" />
+    <None Include="resources\dof.vert" />
+    <None Include="resources\gbuf.frag" />
+    <None Include="resources\gbuf.vert" />
+    <None Include="resources\map.frag" />
+    <None Include="resources\map.vert" />
+    <None Include="resources\shadow.frag" />
+    <None Include="resources\shadow.vert" />
+    <None Include="resources\show.frag" />
+    <None Include="resources\show.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Blur.cpp" />
-    <ClCompile Include="DOF.cpp" />
-    <ClCompile Include="Framebuffer.cpp" />
-    <ClCompile Include="GBuf.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Show.cpp" />
-    <ClCompile Include="Texture.cpp" />
+    <ClInclude Include="include\Blur.h" />
+    <ClInclude Include="include\DOF.h" />
+    <ClInclude Include="include\Framebuffer.h" />
+    <ClInclude Include="include\GBuf.h" />
+    <ClInclude Include="include\Mesh.h" />
+    <ClInclude Include="include\Pass.h" />
+    <ClInclude Include="include\Renderer.h" />
+    <ClInclude Include="include\Shader.h" />
+    <ClInclude Include="include\Show.h" />
+    <ClInclude Include="include\Texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Blur.h" />
-    <ClInclude Include="DOF.h" />
-    <ClInclude Include="Framebuffer.h" />
-    <ClInclude Include="GBuf.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Pass.h" />
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Show.h" />
-    <ClInclude Include="Texture.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="suzanne.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </ExcludedFromBuild>
+    <None Include="resources\fsq.obj">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="resources\suzanne.obj">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="uvmap.DDS">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </ExcludedFromBuild>
-    </None>
+    <Image Include="resources\uvmap.DDS" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="gbuf.frag">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </ExcludedFromBuild>
-      <FileType>Document</FileType>
-    </None>
-    <None Include="gbuf.vert">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </ExcludedFromBuild>
-      <FileType>Document</FileType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="dof.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="fsq.obj">
-      <FileType>Document</FileType>
-    </None>
+    <ClCompile Include="src\Blur.cpp" />
+    <ClCompile Include="src\DOF.cpp" />
+    <ClCompile Include="src\Framebuffer.cpp" />
+    <ClCompile Include="src\GBuf.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Mesh.cpp" />
+    <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\Show.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

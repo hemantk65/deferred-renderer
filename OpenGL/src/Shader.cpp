@@ -21,7 +21,12 @@ Shader::~Shader()
 	glDeleteProgram(m_shader);
 }
 
-void Shader::loadShaders(const char * vertex_file_path, const char * fragment_file_path) {
+void Shader::loadShaders(const char * vertex_file_path, const char * fragment_file_path)
+{
+	std::stringstream ssV;
+	ssV << "resources/" << vertex_file_path;
+	std::stringstream ssF;
+	ssF << "resources/" << fragment_file_path;
 
 	// Create the shaders
 	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -29,7 +34,7 @@ void Shader::loadShaders(const char * vertex_file_path, const char * fragment_fi
 
 	// Read the Vertex Shader code from the file
 	std::string VertexShaderCode;
-	std::ifstream VertexShaderStream(vertex_file_path, std::ios::in);
+	std::ifstream VertexShaderStream(ssV.str(), std::ios::in);
 	if (VertexShaderStream.is_open()) {
 		std::string Line = "";
 		while (getline(VertexShaderStream, Line))
@@ -37,14 +42,14 @@ void Shader::loadShaders(const char * vertex_file_path, const char * fragment_fi
 		VertexShaderStream.close();
 	}
 	else {
-		printf("Can not open %s\n", vertex_file_path);
+		printf("Can not open %s\n", ssV.str().c_str());
 		getchar();
 		return;
 	}
 
 	// Read the Fragment Shader code from the file
 	std::string FragmentShaderCode;
-	std::ifstream FragmentShaderStream(fragment_file_path, std::ios::in);
+	std::ifstream FragmentShaderStream(ssF.str(), std::ios::in);
 	if (FragmentShaderStream.is_open()) {
 		std::string Line = "";
 		while (getline(FragmentShaderStream, Line))
@@ -57,7 +62,7 @@ void Shader::loadShaders(const char * vertex_file_path, const char * fragment_fi
 
 
 	// Compile Vertex Shader
-	printf("Compiling shader : %s\n", vertex_file_path);
+	printf("Compiling shader : %s\n", ssV.str().c_str());
 	char const * VertexSourcePointer = VertexShaderCode.c_str();
 	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
 	glCompileShader(VertexShaderID);
@@ -74,7 +79,7 @@ void Shader::loadShaders(const char * vertex_file_path, const char * fragment_fi
 
 
 	// Compile Fragment Shader
-	printf("Compiling shader : %s\n", fragment_file_path);
+	printf("Compiling shader : %s\n", ssF.str().c_str());
 	char const * FragmentSourcePointer = FragmentShaderCode.c_str();
 	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
 	glCompileShader(FragmentShaderID);

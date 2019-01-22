@@ -1,6 +1,7 @@
 #include "Texture.h"
 
 #include <SOIL.h>
+#include <sstream>
 
 Texture::Texture()
 {
@@ -24,10 +25,12 @@ void Texture::genTexture(GLenum internalFormat, GLenum format, GLint width, GLin
 
 void Texture::loadTexture(const char* name)
 {
+	std::stringstream ss;
+	ss << "resources/" << name;
 	int width, height, channels;
 	unsigned char *image = SOIL_load_image
 	(
-		name,
+		ss.str().c_str(),
 		&width, &height, &channels,
 		SOIL_LOAD_AUTO
 	);

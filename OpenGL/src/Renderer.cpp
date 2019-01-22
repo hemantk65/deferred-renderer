@@ -52,13 +52,13 @@ void Renderer::initModels()
 {
 	{
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile("suzanne.obj", 0);
+		const aiScene* scene = importer.ReadFile("resources/suzanne.obj", 0);
 		m_sphere.addScene(scene);
 	}
 
 	{
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile("fsq.obj", 0);
+		const aiScene* scene = importer.ReadFile("resources/fsq.obj", 0);
 		m_fullScreenQuad.addScene(scene);
 	}
 }

@@ -16,116 +16,116 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="show.vert">
+    <None Include="resources\gbuf.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="show.frag">
+    <None Include="resources\map.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="gbuf.frag">
+    <None Include="resources\map.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="gbuf.vert">
+    <None Include="resources\shadow.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="suzanne.obj">
+    <None Include="resources\shadow.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="uvmap.DDS">
+    <None Include="resources\show.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="blur.vert">
+    <None Include="resources\show.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="blur.frag">
+    <None Include="resources\blur.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="dof.frag">
+    <None Include="resources\blur.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="map.vert">
+    <None Include="resources\dof.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="map.frag">
+    <None Include="resources\dof.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="shadow.vert">
+    <None Include="resources\gbuf.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="shadow.frag">
+    <None Include="resources\fsq.obj">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="fsq.obj">
+    <None Include="resources\suzanne.obj">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GBuf.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Blur.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DOF.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Show.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Framebuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Blur.h">
+    <ClInclude Include="include\GBuf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOF.h">
+    <ClInclude Include="include\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Show.h">
+    <ClInclude Include="include\Pass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GBuf.h">
+    <ClInclude Include="include\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
+    <ClInclude Include="include\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
+    <ClInclude Include="include\Show.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Pass.h">
+    <ClInclude Include="include\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
+    <ClInclude Include="include\Blur.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Framebuffer.h">
+    <ClInclude Include="include\DOF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
+    <ClInclude Include="include\Framebuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="dof.vert">
+    <Image Include="resources\uvmap.DDS">
       <Filter>Resource Files</Filter>
-    </Text>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Show.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Blur.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DOF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framebuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GBuf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
