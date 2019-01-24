@@ -14,11 +14,11 @@ public:
 	void init();
 	void run();
 
-	std::vector<GLuint*> getCbuf() { return std::vector<GLuint*> {m_color_buffer.getTexture(), m_normal_buffer.getTexture()}; }
+	std::vector<GLuint*> getCbuf() { return std::vector<GLuint*> { m_color_buffer.getTexture(), m_normal_buffer.getTexture(), m_position_buffer.getTexture() }; }
 	GLuint* getDbuf() { return m_depth_buffer.getTexture(); }
 
 private:
-	Texture m_color_buffer, m_normal_buffer, m_depth_buffer;
+	Texture m_color_buffer, m_normal_buffer, m_position_buffer, m_depth_buffer;
 	Framebuffer m_gbufFbo;
 	Shader m_gbufShader;
 

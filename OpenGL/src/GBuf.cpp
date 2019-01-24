@@ -15,11 +15,13 @@ void GBuf::init()
 
 	m_color_buffer.genTexture(GL_RGBA8, GL_RGBA, WIDTH, HEIGHT, GL_UNSIGNED_BYTE, nullptr);
 	m_normal_buffer.genTexture(GL_RGBA8, GL_RGBA, WIDTH, HEIGHT, GL_UNSIGNED_BYTE, nullptr);
+	m_position_buffer.genTexture(GL_RGBA8, GL_RGBA, WIDTH, HEIGHT, GL_UNSIGNED_BYTE, nullptr);
 	m_depth_buffer.genTexture(GL_DEPTH_COMPONENT16, GL_DEPTH_COMPONENT, WIDTH, HEIGHT, GL_UNSIGNED_SHORT, nullptr);
 
 	std::vector<sAttachment> attachments = {
 		{ GL_COLOR_ATTACHMENT0, *m_color_buffer.getTexture() },
 		{ GL_COLOR_ATTACHMENT1, *m_normal_buffer.getTexture() },
+		{ GL_COLOR_ATTACHMENT2, *m_position_buffer.getTexture() },
 		{ GL_DEPTH_ATTACHMENT, *m_depth_buffer.getTexture() }
 	};
 	m_gbufFbo.genFbo(attachments);
@@ -31,13 +33,14 @@ void GBuf::run()
 
 	m_gbufFbo.useFbo();
 
-	glm::mat4 modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.3f));
+	glm::mat4 modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.8f));
 	glm::mat4 viewMatrix = glm::lookAt(*m_eye, *m_center, glm::vec3(0.0f, 1.0f, 0.0f));
 	glm::mat4 projectionMatrix = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f);
 
 	glm::mat4 mvp = projectionMatrix * viewMatrix * modelMatrix;
 
 	glUniformMatrix4fv(glGetUniformLocation(m_gbufShader.getProgram(), "mvp"), 1, 0, &mvp[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(m_gbufShader.getProgram(), "model"), 1, 0, &modelMatrix[0][0]);
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_GEQUAL);
