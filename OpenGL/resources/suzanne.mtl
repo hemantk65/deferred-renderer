@@ -1,0 +1,6 @@
+# Blender3D v249 OBJ File: suzanne.blend
+# www.blender3d.org
+
+newmtl tex
+map_Kd uvmap.DDS
+

@@ -34,15 +34,18 @@ void Texture::loadTexture(const char* name)
 		&width, &height, &channels,
 		SOIL_LOAD_AUTO
 	);
-	GLuint format, internalFormat;
-	if (channels == 3) {
-		format = GL_RGB; internalFormat = GL_RGB8;
-	}
-	else if (channels == 4) {
-		format = GL_RGBA; internalFormat = GL_RGBA8;
-	}
+	if (image)
+	{
+		GLuint format, internalFormat;
+		if (channels == 3) {
+			format = GL_RGB; internalFormat = GL_RGB8;
+		}
+		else if (channels == 4) {
+			format = GL_RGBA; internalFormat = GL_RGBA8;
+		}
 
-	genTexture(internalFormat, format, width, height, GL_UNSIGNED_BYTE, image);
+		genTexture(internalFormat, format, width, height, GL_UNSIGNED_BYTE, image);
 
-	delete image;
+		delete image;
+	}
 }

@@ -1,7 +1,7 @@
 #include "GBuf.h"
 
-GBuf::GBuf(glm::vec3 *m_eye, glm::vec3 *m_center, GLuint *m_tex, Mesh *m_sphere)
-	: m_eye(m_eye), m_center(m_center), m_tex(m_tex), m_sphere(m_sphere)
+GBuf::GBuf(glm::vec3 *m_eye, glm::vec3 *m_center, Mesh *m_sphere)
+	: m_eye(m_eye), m_center(m_center), m_sphere(m_sphere)
 {
 }
 
@@ -38,10 +38,6 @@ void GBuf::run()
 	glm::mat4 mvp = projectionMatrix * viewMatrix * modelMatrix;
 
 	glUniformMatrix4fv(glGetUniformLocation(m_gbufShader.getProgram(), "mvp"), 1, 0, &mvp[0][0]);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, *m_tex);
-	glUniform1i(glGetUniformLocation(m_gbufShader.getProgram(), "m_tex"), 0);
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_GEQUAL);

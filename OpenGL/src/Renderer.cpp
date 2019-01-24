@@ -28,7 +28,7 @@ Renderer::Renderer()
 	m_eye = glm::vec3(0.1f, 0.1f, 0.0f);
 	m_center = glm::vec3(-0.2f, -0.2f, -0.5f);
 
-	m_passes.push_back(new GBuf(&m_eye, &m_center, m_tex.getTexture(), &m_sphere));
+	m_passes.push_back(new GBuf(&m_eye, &m_center, &m_sphere));
 	m_passes.push_back(new Blur(m_passes[0]->getCbuf()[0], &m_fullScreenQuad));
 	m_passes.push_back(new DOF(m_passes[0]->getCbuf()[0], m_passes[0]->getDbuf(), m_passes[1]->getCbuf()[0], &m_fullScreenQuad));
 	m_passes.push_back(new Show(m_passes[2]->getCbuf()[0], &m_fullScreenQuad));
@@ -52,7 +52,8 @@ void Renderer::initModels()
 {
 	{
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile("resources/suzanne.obj", 0);
+		importer.SetPropertyBool(AI_CONFIG_PP_PTV_NORMALIZE, 1);
+		const aiScene* scene = importer.ReadFile("resources/suzanne.obj", aiProcess_Triangulate | aiProcess_RemoveRedundantMaterials | aiProcess_PreTransformVertices | aiProcess_JoinIdenticalVertices);
 		m_sphere.addScene(scene);
 	}
 
@@ -63,16 +64,10 @@ void Renderer::initModels()
 	}
 }
 
-void Renderer::initTextures()
-{
-	m_tex.loadTexture("uvmap.DDS");
-}
-
 void Renderer::init()
 {
 	initDebug();
 	initModels();
-	initTextures();
 
 	for (auto pass : m_passes)
 		pass->init();

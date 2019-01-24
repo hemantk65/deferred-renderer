@@ -3,11 +3,15 @@
 #include "assimp/Importer.hpp"
 #include "assimp/postprocess.h"
 
-Mesh::MeshEntry::MeshEntry(aiMesh *mesh) {
+#include <iostream>
+
+Mesh::MeshEntry::MeshEntry(aiMesh *mesh, aiMaterial* material) {
 	vbo[VERTEX_BUFFER] = NULL;
 	vbo[TEXCOORD_BUFFER] = NULL;
 	vbo[NORMAL_BUFFER] = NULL;
 	vbo[INDEX_BUFFER] = NULL;
+	vao = NULL;
+	m_tex = NULL;
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -88,6 +92,15 @@ Mesh::MeshEntry::MeshEntry(aiMesh *mesh) {
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+
+	if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+		aiString Path;
+		if (material->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+			m_tex = new Texture();
+			m_tex->loadTexture(Path.data);
+		}
+	}
 }
 
 Mesh::MeshEntry::~MeshEntry() {
@@ -108,9 +121,22 @@ Mesh::MeshEntry::~MeshEntry() {
 	}
 
 	glDeleteVertexArrays(1, &vao);
+
+	delete m_tex;
 }
 
 void Mesh::MeshEntry::render() {
+	if (m_tex)
+	{
+		GLint program;
+		glGetIntegerv(GL_CURRENT_PROGRAM, &program);
+
+		GLuint texture = *(m_tex->getTexture());
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glUniform1i(glGetUniformLocation(program, "m_tex"), 0);
+	}
+
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, elementCount, GL_UNSIGNED_INT, NULL);
 	glBindVertexArray(0);
@@ -123,7 +149,7 @@ Mesh::Mesh()
 Mesh::Mesh(const aiScene* scene)
 {
 	for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
-		meshEntries.push_back(new Mesh::MeshEntry(scene->mMeshes[i]));
+		meshEntries.push_back(new Mesh::MeshEntry(scene->mMeshes[i], scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]));
 	}
 }
 
@@ -131,7 +157,7 @@ Mesh::Mesh(const aiScene* scene)
 void Mesh::addScene(const aiScene* scene)
 {
 	for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
-		meshEntries.push_back(new Mesh::MeshEntry(scene->mMeshes[i]));
+		meshEntries.push_back(new Mesh::MeshEntry(scene->mMeshes[i], scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]));
 	}
 }
 

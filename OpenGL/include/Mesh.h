@@ -5,6 +5,8 @@
 #include "assimp/scene.h"
 #include "assimp/mesh.h"
 
+#include "Texture.h"
+
 #include <vector>
 
 class Mesh
@@ -16,10 +18,11 @@ public:
 		};
 		GLuint vao;
 		GLuint vbo[4];
+		Texture *m_tex;
 
 		unsigned int elementCount;
 
-		MeshEntry(aiMesh *mesh);
+		MeshEntry(aiMesh *mesh, aiMaterial *material);
 		~MeshEntry();
 
 		void render();

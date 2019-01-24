@@ -34,7 +34,6 @@ public:
 private:
 	void initDebug();
 	void initModels();
-	void initTextures();
 
 	std::vector<Pass*> m_passes;
 
@@ -42,6 +41,4 @@ private:
 	glm::vec3 m_center;
 
 	Mesh m_sphere, m_fullScreenQuad;
-
-	Texture m_tex;
 };
