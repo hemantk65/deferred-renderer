@@ -1,7 +1,7 @@
 #include "DOF.h"
 
-DOF::DOF(GLuint *m_color_buffer, GLuint *m_depth_buffer, GLuint *blur_buffer, Mesh *mesh)
-	: m_color_buffer(m_color_buffer), m_depth_buffer(m_depth_buffer), m_blur_buffer(blur_buffer), m_mesh(mesh)
+DOF::DOF(GLuint *color_buffer, GLuint *depth_buffer, GLuint *blur_buffer, Mesh *mesh)
+	: m_color_buffer(color_buffer), m_depth_buffer(depth_buffer), m_blur_buffer(blur_buffer), m_mesh(mesh)
 {
 }
 

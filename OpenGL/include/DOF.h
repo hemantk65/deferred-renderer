@@ -5,7 +5,7 @@
 class DOF : public Pass
 {
 public:
-	DOF(GLuint *m_color_buffer, GLuint *m_depth_buffer, GLuint *blur_buffer, Mesh *mesh);
+	DOF(GLuint *color_buffer, GLuint *depth_buffer, GLuint *blur_buffer, Mesh *mesh);
 	~DOF();
 
 	void init();

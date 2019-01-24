@@ -1,7 +1,7 @@
 #include "Blur.h"
 
-Blur::Blur(GLuint *m_color_buffer, Mesh *mesh)
-	: m_color_buffer(m_color_buffer), m_mesh(mesh)
+Blur::Blur(GLuint *color_buffer, Mesh *mesh)
+	: m_color_buffer(color_buffer), m_mesh(mesh)
 {
 }
 

@@ -5,7 +5,7 @@
 class Blur : public Pass
 {
 public:
-	Blur(GLuint *m_color_buffer, Mesh *mesh);
+	Blur(GLuint *color_buffer, Mesh *mesh);
 	~Blur();
 
 	void init();
