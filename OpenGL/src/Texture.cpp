@@ -2,6 +2,7 @@
 
 #include <SOIL.h>
 #include <sstream>
+#include <iostream>
 
 Texture::Texture()
 {
@@ -48,4 +49,6 @@ void Texture::loadTexture(const char* name)
 
 		delete image;
 	}
+	else
+		std::cerr << "Texture not found: " << ss.str() << std::endl;
 }

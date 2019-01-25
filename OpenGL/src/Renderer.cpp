@@ -5,6 +5,7 @@
 #include <assimp/postprocess.h>
 
 #include "GBuf.h"
+#include "Lighting.h"
 #include "Blur.h"
 #include "DOF.h"
 #include "Show.h"
@@ -29,9 +30,10 @@ Renderer::Renderer()
 	m_center = glm::vec3(-0.2f, -0.2f, -0.5f);
 
 	m_passes.push_back(new GBuf(&m_eye, &m_center, &m_sphere));
-	m_passes.push_back(new Blur(m_passes[0]->getCbuf()[0], &m_fullScreenQuad));
-	m_passes.push_back(new DOF(m_passes[0]->getCbuf()[0], m_passes[0]->getDbuf(), m_passes[1]->getCbuf()[0], &m_fullScreenQuad));
-	m_passes.push_back(new Show(m_passes[2]->getCbuf()[0], &m_fullScreenQuad));
+	m_passes.push_back(new Lighting(m_passes[0]->getCbuf()[0], m_passes[0]->getCbuf()[1], m_passes[0]->getCbuf()[2], m_passes[0]->getCbuf()[3], &m_fullScreenQuad));
+	m_passes.push_back(new Blur(m_passes[1]->getCbuf()[0], &m_fullScreenQuad));
+	m_passes.push_back(new DOF(m_passes[1]->getCbuf()[0], m_passes[0]->getDbuf(), m_passes[2]->getCbuf()[0], &m_fullScreenQuad));
+	m_passes.push_back(new Show(m_passes[3]->getCbuf()[0], &m_fullScreenQuad));
 }
 
 Renderer::~Renderer()

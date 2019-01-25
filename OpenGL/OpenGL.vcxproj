@@ -137,6 +137,8 @@
     <None Include="resources\dof.vert" />
     <None Include="resources\gbuf.frag" />
     <None Include="resources\gbuf.vert" />
+    <None Include="resources\lighting.frag" />
+    <None Include="resources\lighting.vert" />
     <None Include="resources\map.frag" />
     <None Include="resources\map.vert" />
     <None Include="resources\shadow.frag" />
@@ -149,6 +151,7 @@
     <ClInclude Include="include\DOF.h" />
     <ClInclude Include="include\Framebuffer.h" />
     <ClInclude Include="include\GBuf.h" />
+    <ClInclude Include="include\Lighting.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\Pass.h" />
     <ClInclude Include="include\Renderer.h" />
@@ -172,6 +175,7 @@
     <ClCompile Include="src\DOF.cpp" />
     <ClCompile Include="src\Framebuffer.cpp" />
     <ClCompile Include="src\GBuf.cpp" />
+    <ClCompile Include="src\Lighting.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Renderer.cpp" />

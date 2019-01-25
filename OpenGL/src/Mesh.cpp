@@ -101,6 +101,14 @@ Mesh::MeshEntry::MeshEntry(aiMesh *mesh, aiMaterial* material) {
 			m_tex->loadTexture(Path.data);
 		}
 	}
+
+	aiColor3D ambient, diffuse, specular;
+	float shininess;
+	material->Get(AI_MATKEY_COLOR_AMBIENT, ambient);
+	material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse);
+	material->Get(AI_MATKEY_COLOR_SPECULAR, specular);
+	material->Get(AI_MATKEY_SHININESS, shininess);
+	reflectivity = { ambient.r, diffuse.r, specular.r, shininess };
 }
 
 Mesh::MeshEntry::~MeshEntry() {
@@ -126,10 +134,13 @@ Mesh::MeshEntry::~MeshEntry() {
 }
 
 void Mesh::MeshEntry::render() {
+	GLint program;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &program);
+
+	glUniform4fv(glGetUniformLocation(program, "reflectivity"), 1, reflectivity.data());
+
 	if (m_tex)
 	{
-		GLint program;
-		glGetIntegerv(GL_CURRENT_PROGRAM, &program);
 
 		GLuint texture = *(m_tex->getTexture());
 		glActiveTexture(GL_TEXTURE0);

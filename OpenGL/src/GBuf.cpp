@@ -16,12 +16,14 @@ void GBuf::init()
 	m_color_buffer.genTexture(GL_RGBA8, GL_RGBA, WIDTH, HEIGHT, GL_UNSIGNED_BYTE, nullptr);
 	m_normal_buffer.genTexture(GL_RGBA8, GL_RGBA, WIDTH, HEIGHT, GL_UNSIGNED_BYTE, nullptr);
 	m_position_buffer.genTexture(GL_RGBA8, GL_RGBA, WIDTH, HEIGHT, GL_UNSIGNED_BYTE, nullptr);
+	m_reflectance_buffer.genTexture(GL_RGBA16F, GL_RGBA, WIDTH, HEIGHT, GL_HALF_FLOAT, nullptr);
 	m_depth_buffer.genTexture(GL_DEPTH_COMPONENT16, GL_DEPTH_COMPONENT, WIDTH, HEIGHT, GL_UNSIGNED_SHORT, nullptr);
 
 	std::vector<sAttachment> attachments = {
 		{ GL_COLOR_ATTACHMENT0, *m_color_buffer.getTexture() },
 		{ GL_COLOR_ATTACHMENT1, *m_normal_buffer.getTexture() },
 		{ GL_COLOR_ATTACHMENT2, *m_position_buffer.getTexture() },
+		{ GL_COLOR_ATTACHMENT3, *m_reflectance_buffer.getTexture() },
 		{ GL_DEPTH_ATTACHMENT, *m_depth_buffer.getTexture() }
 	};
 	m_gbufFbo.genFbo(attachments);

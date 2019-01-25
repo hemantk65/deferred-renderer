@@ -19,6 +19,7 @@ public:
 		GLuint vao;
 		GLuint vbo[4];
 		Texture *m_tex;
+		std::vector<float> reflectivity;
 
 		unsigned int elementCount;
 
