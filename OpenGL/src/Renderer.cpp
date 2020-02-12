@@ -55,7 +55,7 @@ void Renderer::initModels()
 	{
 		Assimp::Importer importer;
 		importer.SetPropertyBool(AI_CONFIG_PP_PTV_NORMALIZE, 1);
-		const aiScene* scene = importer.ReadFile("resources/suzanne.obj", aiProcess_Triangulate | aiProcess_RemoveRedundantMaterials | aiProcess_PreTransformVertices | aiProcess_JoinIdenticalVertices);
+		const aiScene* scene = importer.ReadFile("resources/nanosuit.obj", aiProcess_Triangulate | aiProcess_RemoveRedundantMaterials | aiProcess_PreTransformVertices | aiProcess_JoinIdenticalVertices);
 		m_sphere.addScene(scene);
 	}
 
