@@ -18,7 +18,7 @@ public:
 		};
 		GLuint vao;
 		GLuint vbo[4];
-		Texture *m_tex;
+		std::vector<Texture*> m_tex;
 		std::vector<float> reflectivity;
 
 		unsigned int elementCount;
@@ -27,6 +27,7 @@ public:
 		~MeshEntry();
 
 		void render();
+		void loadTextures(aiMaterial* material);
 	};
 
 	std::vector<MeshEntry*> meshEntries;

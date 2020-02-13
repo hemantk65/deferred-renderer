@@ -1,7 +1,7 @@
 #include "GBuf.h"
 
-GBuf::GBuf(glm::vec3 *m_eye, glm::vec3 *m_center, Mesh *m_sphere)
-	: m_eye(m_eye), m_center(m_center), m_sphere(m_sphere)
+GBuf::GBuf(glm::vec3 *m_eye, glm::vec3 *m_center, std::vector<Mesh*> m_meshes)
+	: m_eye(m_eye), m_center(m_center), m_meshes(m_meshes)
 {
 }
 
@@ -37,7 +37,7 @@ void GBuf::run()
 
 	glm::mat4 modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.8f));
 	glm::mat4 viewMatrix = glm::lookAt(*m_eye, *m_center, glm::vec3(0.0f, 1.0f, 0.0f));
-	glm::mat4 projectionMatrix = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f);
+	glm::mat4 projectionMatrix = glm::perspective(glm::radians(100.0), 4.0 / 3.0, 0.01, 10.0);
 
 	glm::mat4 mvp = projectionMatrix * viewMatrix * modelMatrix;
 
@@ -45,13 +45,16 @@ void GBuf::run()
 	glUniformMatrix4fv(glGetUniformLocation(m_gbufShader.getProgram(), "model"), 1, 0, &modelMatrix[0][0]);
 
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_GEQUAL);
+	glDepthFunc(GL_LEQUAL);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClearDepthf(-1.0f);
+	glClearDepthf(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	m_sphere->render();
+	for (auto mesh : m_meshes)
+	{
+		mesh->render();
+	}
 
 	glDisable(GL_DEPTH_TEST);
 }

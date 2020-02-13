@@ -8,7 +8,7 @@
 class GBuf : public Pass
 {
 public:
-	GBuf(glm::vec3 *m_eye, glm::vec3 *m_center, Mesh *m_sphere);
+	GBuf(glm::vec3 *m_eye, glm::vec3 *m_center, std::vector<Mesh*> m_meshes);
 	~GBuf();
 
 	void init();
@@ -23,5 +23,5 @@ private:
 	Shader m_gbufShader;
 
 	glm::vec3 *m_eye, *m_center;
-	Mesh *m_sphere;
+	std::vector<Mesh*> m_meshes;
 };

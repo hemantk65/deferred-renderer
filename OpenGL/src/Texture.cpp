@@ -24,8 +24,10 @@ void Texture::genTexture(GLenum internalFormat, GLenum format, GLint width, GLin
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture::loadTexture(const char* name)
+void Texture::loadTexture(const char* name, std::string type)
 {
+	m_type = type;
+
 	std::stringstream ss;
 	ss << "resources/" << name;
 	int width, height, channels;

@@ -11,7 +11,6 @@ Mesh::MeshEntry::MeshEntry(aiMesh *mesh, aiMaterial* material) {
 	vbo[NORMAL_BUFFER] = NULL;
 	vbo[INDEX_BUFFER] = NULL;
 	vao = NULL;
-	m_tex = NULL;
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -93,14 +92,7 @@ Mesh::MeshEntry::MeshEntry(aiMesh *mesh, aiMaterial* material) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-
-	if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
-		aiString Path;
-		if (material->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
-			m_tex = new Texture();
-			m_tex->loadTexture(Path.data);
-		}
-	}
+	loadTextures(material);
 
 	aiColor3D ambient, diffuse, specular;
 	float shininess;
@@ -109,6 +101,42 @@ Mesh::MeshEntry::MeshEntry(aiMesh *mesh, aiMaterial* material) {
 	material->Get(AI_MATKEY_COLOR_SPECULAR, specular);
 	material->Get(AI_MATKEY_SHININESS, shininess);
 	reflectivity = { ambient.r, diffuse.r, specular.r, shininess };
+}
+
+void Mesh::MeshEntry::loadTextures(aiMaterial* material)
+{
+	for (int i = 0; i < material->GetTextureCount(aiTextureType_DIFFUSE); i++) {
+		aiString Path;
+		if (material->GetTexture(aiTextureType_DIFFUSE, i, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+			Texture* tex = new Texture();
+			tex->loadTexture(Path.data, "diffuse");
+			m_tex.push_back(tex);
+		}
+	}
+	for (int i = 0; i < material->GetTextureCount(aiTextureType_SPECULAR); i++) {
+		aiString Path;
+		if (material->GetTexture(aiTextureType_SPECULAR, i, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+			Texture* tex = new Texture();
+			tex->loadTexture(Path.data, "specular");
+			m_tex.push_back(tex);
+		}
+	}
+	for (int i = 0; i < material->GetTextureCount(aiTextureType_AMBIENT); i++) {
+		aiString Path;
+		if (material->GetTexture(aiTextureType_AMBIENT, i, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+			Texture* tex = new Texture();
+			tex->loadTexture(Path.data, "ambient");
+			m_tex.push_back(tex);
+		}
+	}
+	for (int i = 0; i < material->GetTextureCount(aiTextureType_HEIGHT); i++) {
+		aiString Path;
+		if (material->GetTexture(aiTextureType_HEIGHT, i, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+			Texture* tex = new Texture();
+			tex->loadTexture(Path.data, "height");
+			m_tex.push_back(tex);
+		}
+	}
 }
 
 Mesh::MeshEntry::~MeshEntry() {
@@ -130,7 +158,8 @@ Mesh::MeshEntry::~MeshEntry() {
 
 	glDeleteVertexArrays(1, &vao);
 
-	delete m_tex;
+	for(auto tex: m_tex)
+		delete tex;
 }
 
 void Mesh::MeshEntry::render() {
@@ -139,13 +168,30 @@ void Mesh::MeshEntry::render() {
 
 	glUniform4fv(glGetUniformLocation(program, "reflectivity"), 1, reflectivity.data());
 
-	if (m_tex)
-	{
+	int diffuseTexCount = 0;
+	int specularTexCount = 0;
+	int albedoTexCount = 0;
+	int heightTexCount = 0;
 
-		GLuint texture = *(m_tex->getTexture());
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glUniform1i(glGetUniformLocation(program, "m_tex"), 0);
+	for(int i = 0; i < m_tex.size(); i++)
+	{
+		Texture *texture = m_tex[i];
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, *(texture->getTexture()));
+
+		std::string texType = texture->getTextureType();
+		std::string texName;
+		if (texType.compare("diffuse") == 0)
+			texName = texType + "_tex" + std::to_string(diffuseTexCount++);
+		if (texType.compare("specular") == 0)
+			texName = texType + "_tex" + std::to_string(specularTexCount++);
+		if (texType.compare("ambient") == 0)
+			texName = texType + "_tex" + std::to_string(albedoTexCount++);
+		if (texType.compare("height") == 0)
+			texName = texType + "_tex" + std::to_string(heightTexCount++);
+
+		GLuint location = glGetUniformLocation(program, texName.c_str());
+		glUniform1i(location, i);
 	}
 
 	glBindVertexArray(vao);

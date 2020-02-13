@@ -10,5 +10,7 @@ layout(location = 0) out vec4 color;
 
 void main()
 {
-	color = mix(texture(colorTex, texCoord), texture(blurTex, texCoord), texture(depthTex, texCoord).r);
+	float focus = 0.9f;
+	float depthDiff = abs(texture(depthTex, texCoord).r - focus);
+	color = mix(texture(colorTex, texCoord), texture(blurTex, texCoord), depthDiff);
 }

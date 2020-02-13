@@ -40,5 +40,5 @@ private:
 	glm::vec3 m_eye;
 	glm::vec3 m_center;
 
-	Mesh m_sphere, m_fullScreenQuad;
+	Mesh m_sphere, m_fullScreenQuad, m_cube;
 };

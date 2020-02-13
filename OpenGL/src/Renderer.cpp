@@ -26,10 +26,12 @@ MessageCallback(GLenum source,
 
 Renderer::Renderer()
 {
-	m_eye = glm::vec3(0.1f, 0.1f, 0.0f);
-	m_center = glm::vec3(-0.2f, -0.2f, -0.5f);
+	m_eye = glm::vec3(0.0f, 0.0f, 0.95f);
+	m_center = glm::vec3(0.0f, 0.0f, 0.0f);
 
-	m_passes.push_back(new GBuf(&m_eye, &m_center, &m_sphere));
+	std::vector<Mesh*> meshList = { &m_cube, &m_sphere };
+
+	m_passes.push_back(new GBuf(&m_eye, &m_center, meshList));
 	m_passes.push_back(new Lighting(m_passes[0]->getCbuf()[0], m_passes[0]->getCbuf()[1], m_passes[0]->getCbuf()[2], m_passes[0]->getCbuf()[3], &m_fullScreenQuad));
 	m_passes.push_back(new Blur(m_passes[1]->getCbuf()[0], &m_fullScreenQuad));
 	m_passes.push_back(new DOF(m_passes[1]->getCbuf()[0], m_passes[0]->getDbuf(), m_passes[2]->getCbuf()[0], &m_fullScreenQuad));
@@ -63,6 +65,12 @@ void Renderer::initModels()
 		Assimp::Importer importer;
 		const aiScene* scene = importer.ReadFile("resources/fsq.obj", 0);
 		m_fullScreenQuad.addScene(scene);
+	}
+
+	{
+		Assimp::Importer importer;
+		const aiScene* scene = importer.ReadFile("resources/cube.obj", 0);
+		m_cube.addScene(scene);
 	}
 }
 
